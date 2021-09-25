@@ -8,10 +8,30 @@ const TransactionSchema = new mongoose.Schema(
       ref: "user",
       required: true,
     },
+    type: {
+      type: String,
+      required: true,
+    },
     status: {
       type: String,
       require: true,
-      default: "unresolved",
+      default: "pending",
+    },
+    cash_amount: {
+      type: String,
+      required: true,
+    },
+    btc_amount: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    currency: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

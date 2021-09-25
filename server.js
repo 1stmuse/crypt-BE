@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const app = require("./app");
 
 mongoose
-  .connect("mongodb://localhost/chatty", {
+  .connect(process.env.DB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -17,7 +17,8 @@ mongoose.Promise = global.Promise;
 
 const server = http.createServer(app);
 
-const io = require("socket.io").listen(server);
+const io = require("socket.io")(server);
+
 io.use(async (socket, next) => {
   const token = socket.handshake.query.id;
   try {

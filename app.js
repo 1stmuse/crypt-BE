@@ -4,7 +4,7 @@ const cors = require("cors");
 const cookie = require("cookie-parser");
 const routes = require("./routes");
 
-app.use(cors);
+app.use(cors());
 app.use(cookie());
 app.use(express.json());
 

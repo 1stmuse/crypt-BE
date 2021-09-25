@@ -18,6 +18,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    debt: {
+      type: String,
+      default: "0",
+    },
     isAdmin: {
       type: Boolean,
       default: false,
