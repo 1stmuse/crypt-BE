@@ -1,5 +1,5 @@
 Arguments: 
-  /home/muse/.nvm/versions/node/v12.20.1/bin/node /usr/share/yarn/bin/yarn.js add express monoose cors bcrypt
+  /home/muse/.nvm/versions/node/v12.20.1/bin/node /usr/share/yarn/bin/yarn.js add nodemailer
 
 PATH: 
   /home/muse/.nvm/versions/node/v12.20.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/muse/Android/Sdk/tools:/home/muse/Android/Sdk/platform-tools
@@ -14,17 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/monoose: Not found
-      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66988:18)
-      at Request.self.callback (/usr/share/yarn/lib/cli.js:140749:22)
-      at Request.emit (events.js:314:20)
-      at Request.<anonymous> (/usr/share/yarn/lib/cli.js:141721:10)
-      at Request.emit (events.js:314:20)
-      at IncomingMessage.<anonymous> (/usr/share/yarn/lib/cli.js:141643:12)
-      at Object.onceWrapper (events.js:420:28)
-      at IncomingMessage.emit (events.js:326:22)
-      at endReadableNT (_stream_readable.js:1241:12)
-      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+  Error: ENOENT: no such file or directory, open '/home/muse/.cache/yarn/v6/npm-engine-io-parser-4.0.3-83d3a17acfd4226f19e721bb22a1ee8f7662d2f6-integrity/node_modules/engine.io-parser/.yarn-metadata.json'
 
 npm manifest: 
   {
@@ -39,7 +29,20 @@ npm manifest:
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencies": {
+      "bcrypt": "^5.0.1",
+      "cookie-parser": "^1.4.5",
+      "cors": "^2.8.5",
+      "dotenv": "^10.0.0",
+      "express": "^4.17.1",
+      "jsonwebtoken": "^8.5.1",
+      "mongoose": "^6.0.6",
+      "socket.io": "^4.2.0"
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.12"
+    }
   }
 
 yarn manifest: 

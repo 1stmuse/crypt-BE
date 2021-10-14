@@ -1,76 +1,8 @@
-const User = require("../models/user.model");
 const Transaction = require("../models/transaction");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const User = require("../models/user.model");
 const mongoose = require("mongoose");
-require("dotenv").config();
 
-exports.register = async (req, res, next) => {
-  try {
-    const payload = req.body;
-    const user = await User.findOne({ email: payload.email });
-    if (user) {
-      const error = new Error("email already exist");
-      error.status = 400;
-      next(error);
-      return;
-    }
-    const hashPassword = await bcrypt.hash(payload.password, 10);
-    payload.password = hashPassword;
-
-    let newUser = new User(payload);
-    await newUser.save();
-    res
-      .status(200)
-      .json({ error: false, message: "user created successfully" });
-  } catch (err) {
-    const error = new Error(err.message);
-    error.status = 400;
-    next(error);
-  }
-};
-
-exports.login = async (req, res, next) => {
-  const payload = req.body;
-  try {
-    const user = await User.findOne({ email: payload.email });
-    if (!user) {
-      const error = new Error("username or password incorrect");
-      error.status = 400;
-      next(error);
-      return;
-    }
-
-    const password = bcrypt.compareSync(payload.password, user.password);
-    if (!password) {
-      const error = new Error("username or password incorrect");
-      error.status = 400;
-      next(error);
-      return;
-    }
-    const token = jwt.sign(user._id.toHexString(), process.env.TOKEN_SECRET);
-    if (!token) {
-      const error = new Error("could not generate token");
-      error.status = 500;
-      next(error);
-      return;
-    }
-    res.status(200).json({
-      error: false,
-      data: {
-        token,
-        user,
-      },
-      message: "login succesfull",
-    });
-  } catch (err) {
-    const error = new Error(err.message);
-    error.status = 400;
-    next(error);
-  }
-};
-
-exports.getTransactions = async (req, res, next) => {
+exports.getUserTransactions = async (req, res, next) => {
   const { userId } = req.params;
   try {
     if (!mongoose.isValidObjectId(userId)) {
@@ -98,6 +30,31 @@ exports.getTransactions = async (req, res, next) => {
   } catch (err) {
     const error = new Error(err.message);
     error.status = 400;
+    next(error);
+  }
+};
+
+exports.getAllTransactions = async (req, res, next) => {
+  try {
+    let transactions = await Transaction.find().sort({
+      createdAt: -1,
+    });
+
+    if (!transactions) {
+      const error = new Error("could not get transactions");
+      error.status = 400;
+      next(error);
+      return;
+    }
+    res.status(200).json({
+      error: false,
+      data: {
+        transactions,
+      },
+    });
+  } catch (err) {
+    const error = new Error(err.message);
+    error.status = 500;
     next(error);
   }
 };
@@ -140,7 +97,6 @@ exports.createTransaction = async (req, res, next) => {
     //   userId,
     //   type,
     //   status,
-    // };
 
     let trans = await new Transaction(req.body);
     await trans.save();

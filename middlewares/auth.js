@@ -12,7 +12,7 @@ const auth = async (req, res, next) => {
 
   const token = bearer.split(" ")[1];
 
-  const decode = await jwt.verify(token, process.env.TOKEN_SECRET);
+  const decode = jwt.verify(token, process.env.TOKEN_SECRET);
 
   const user = await User.findById(decode);
   if (!user) {
@@ -20,6 +20,7 @@ const auth = async (req, res, next) => {
     error.status = 401;
     next(error);
   }
+  req.user = user;
   next();
 };
 
