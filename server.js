@@ -14,7 +14,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("DB Connected"))
+  .then(() => console.log("DB Connected and running"))
   .catch((err) => console.log("error connecting", err));
 
 mongoose.Promise = global.Promise;
