@@ -14,6 +14,18 @@ const AdminInfo = new mongoose.Schema(
       type: String,
       require: true,
     },
+    ethereum_address: {
+      type: String,
+      required: true,
+    },
+    dogecoin_address: {
+      type: String,
+      required: true,
+    },
+    litecoin_address: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

@@ -10,7 +10,7 @@ const transport = require("./utils/mailer");
 const { buyMail, sellMail, borrowMail, repayMail } = require("./utils/mail");
 
 mongoose
-  .connect(process.env.MONGO_URL, {
+  .connect(process.env.DB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -31,7 +31,8 @@ const io = new Server(server, {
 
 const mailOptions = {
   from: "olysegs@gmail.com", // Sender address
-  to: "rusland.kogan@gmail.com", // List of recipients
+  // to: "rusland.kogan@gmail.com", // List of recipients
+  to: "theakinnagbe@gmail.com",
   subject: "Transaction Initiated", // Subject line
   // text: "Hello People!, Welcome to Bacancy!", // Plain text body
 };
@@ -56,7 +57,7 @@ io.on("connection", (socket) => {
 
   io.to(id).emit("connected", "connected");
 
-  socket.on("Buy-BTC", async (data) => {
+  socket.on("Buy-crypto", async (data) => {
     const payload = await User.findById(data.userId).select(
       "firstname lastname"
     );
@@ -93,7 +94,7 @@ io.on("connection", (socket) => {
     );
   });
 
-  socket.on("Sell-BTC", async (data) => {
+  socket.on("Sell-crypto", async (data) => {
     const payload = await User.findById(data.userId).select(
       "firstname lastname"
     );

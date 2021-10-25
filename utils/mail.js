@@ -8,15 +8,15 @@ exports.buyMail = (data) => {
       <h3 style="color: brown; font-size: 20px; margin-left: auto; margin-right: auto;">Transaction Initiated</h3>
       <div style="margin-top: 10px; " >
           <p style="margin-bottom: 20px;">
-              ${data.firstname} ${data.lastname} has requested to buy Crypto from you and has transafered the money to your account, the following is the prove of his payment and BTC address for you to send the crypto
+              ${data.firstname} ${data.lastname} has requested to buy Crypto from you and has transafered the money to your account, the following is the prove of his payment and ${data.crypto_type} address for you to send the crypto
           </p>
           <h3 style="margin-top: 10px; margin-bottom: 10px;"> Transaction Info </h3>
           <div style="display: flex; margin-top: 5px;">
-              <p style="margin-right: 5px;">BTC ADDRESS:</p>
-              <p>${data.btc_address}</p>
+              <p style="margin-right: 5px;">${data.crypto_type} ADDRESS:</p>
+              <p>${data.crypto_address}</p>
           </div>
           <div style="display: flex; margin-top: 5px;">
-              <p style="margin-right: 5px;">BTC Amount expected:</p>
+              <p style="margin-right: 5px;">${data.crypto_type} Amount expected:</p>
               <p>${data.btc_amount}</p>
           </div>
           <div style="display: flex; margin-top: 5px;">
@@ -42,7 +42,7 @@ exports.sellMail = (data) => {
         <h3 style="color: brown; font-size: 20px; margin-left: auto; margin-right: auto;">Transaction Initiated</h3>
         <div style="margin-top: 10px;" >
             <p style="margin-bottom: 20px;">
-                ${data.firstname} ${data.lastname} has sent  Crypto to your BTC address , the following is the prove of his transfer to your BTC address and his account information for you to pay him
+                ${data.firstname} ${data.lastname} has sent  Crypto to your ${data.crypto_type} address , the following is the prove of his transfer to your ${data.crypto_type} address and his account information for you to pay him
             </p>
             <h3 style="margin-top: 10px; margin-bottom: 10px;"> Transaction Info </h3>
             <div style="display: flex; margin-top: 5px;">
@@ -54,7 +54,7 @@ exports.sellMail = (data) => {
             <p>${data.account_number}</p>
         </div>
             <div style="display: flex; margin-top: 5px;">
-                <p style="margin-right: 5px;">BTC Amount sent:</p>
+                <p style="margin-right: 5px;">${data.crypto_type} Amount sent:</p>
                 <p>${data.btc_amount}</p>
             </div>
             <div style="display: flex; margin-top: 5px;">
@@ -80,7 +80,7 @@ exports.borrowMail = (data) => {
           <h3 style="color: brown; font-size: 20px; margin-left: auto; margin-right: auto;">Transaction Initiated</h3>
           <div style="margin-top: 10px;" >
               <p style="margin-bottom: 20px;">
-                  ${data.firstname} ${data.lastname} has deposited some  Crypto to your BTC address as collateral for loan , the following is the prove of his transfer to your BTC address and his account information where you are to send the money requested for borrowing
+                  ${data.firstname} ${data.lastname} has deposited some  Crypto to your ${data.crypto_type} address as collateral for loan , the following is the prove of his transfer to your ${data.crypto_type} address and his account information where you are to send the money requested for borrowing
               </p>
               <h3 style="margin-top: 10px; margin-bottom: 10px;"> Transaction Info </h3>
               <div style="display: flex; margin-top: 5px;">
@@ -92,7 +92,7 @@ exports.borrowMail = (data) => {
               <p>${data.account_number}</p>
           </div>
               <div style="display: flex; margin-top: 5px;">
-                  <p style="margin-right: 5px;">BTC Amount deposited:</p>
+                  <p style="margin-right: 5px;">${data.crypto_type} Amount deposited:</p>
                   <p>${data.btc_amount}</p>
               </div>
               <div style="display: flex; margin-top: 5px;">
