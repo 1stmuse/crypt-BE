@@ -6,6 +6,7 @@ const {
   addInfo,
   getUsers,
   getDebtBalance,
+  verifyEmail,
 } = require("../controllers/userControler");
 const {
   createTransaction,
@@ -20,6 +21,7 @@ Router.get("/users", auth, admin, getUsers);
 Router.get("/admin/info", auth, getInfo);
 Router.post("/admin/info", auth, admin, addInfo);
 Router.post("/user/register", register);
+Router.post("/user/verify", verifyEmail);
 Router.post("/user/login", login);
 Router.get("/user/debt", auth, getDebtBalance);
 Router.post("/transactions", auth, createTransaction);

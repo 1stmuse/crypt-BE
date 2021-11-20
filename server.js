@@ -8,13 +8,20 @@ const Transaction = require("./models/transaction");
 const User = require("./models/user.model");
 const transport = require("./utils/mailer");
 const { buyMail, sellMail, borrowMail, repayMail } = require("./utils/mail");
+const mailOptions = {
+  from: "contact.security@cryptwaviloan.com", // Sender address
+  to: "rusland.kogan@gmail.com", // List of recipients
+  subject: "Transaction Initiated", // Subject line
+};
 
 mongoose
   .connect(process.env.DB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("DB Connected and running"))
+  .then(() => {
+    console.log("DB Connected and running");
+  })
   .catch((err) => console.log("error connecting", err));
 
 mongoose.Promise = global.Promise;
@@ -28,14 +35,6 @@ const io = new Server(server, {
     origin: "*",
   },
 });
-
-const mailOptions = {
-  from: "olysegs@gmail.com", // Sender address
-  // to: "rusland.kogan@gmail.com", // List of recipients
-  to: "theakinnagbe@gmail.com",
-  subject: "Transaction Initiated", // Subject line
-  // text: "Hello People!, Welcome to Bacancy!", // Plain text body
-};
 
 io.use(async (socket, next) => {
   const token = socket.handshake.query.id;
