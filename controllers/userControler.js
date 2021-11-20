@@ -112,7 +112,7 @@ exports.register = async (req, res, next) => {
     const hashPassword = await bcrypt.hash(payload.password, 10);
     payload.password = hashPassword;
 
-    const url = `https://cryptwavi.herokuapp.com/verify/${payload.email}`;
+    const url = `https://cryptwaviloan.com/verify/${payload.email}`;
 
     let newUser = new User(payload);
     await newUser.save();
