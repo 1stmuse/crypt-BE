@@ -93,7 +93,7 @@ exports.register = async (req, res, next) => {
     const payload = req.body;
 
     const { valid, reason, validators } = await isEmailValid(payload.email);
-    // console.log(valid, reason, validators);
+    console.log(valid, reason, validators);
 
     if (!validators.mx.valid) {
       const error = new Error("email is not a valid email address");
