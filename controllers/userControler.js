@@ -186,16 +186,15 @@ exports.login = async (req, res, next) => {
   const payload = req.body;
   try {
     const user = await User.findOne({ email: payload.email });
-
-    if (!user.isVerified && !user.isAdmin) {
-      const error = new Error("Please verify your email address to continue");
+    if (!user) {
+      const error = new Error("username or password incorrect");
       error.status = 400;
       next(error);
       return;
     }
 
-    if (!user) {
-      const error = new Error("username or password incorrect");
+    if (!user.isVerified && !user.isAdmin) {
+      const error = new Error("Please verify your email address to continue");
       error.status = 400;
       next(error);
       return;
