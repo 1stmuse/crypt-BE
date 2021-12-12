@@ -2,9 +2,9 @@ const User = require("../models/user.model");
 const AdminInfo = require("../models/adminInfo");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
 require("dotenv").config();
 const emailValidator = require("deep-email-validator");
+const { otpMail } = require("../utils/mail");
 const { verifyMail } = require("../utils/verifyMail");
 const transport = require("../utils/mailer");
 
@@ -222,6 +222,80 @@ exports.login = async (req, res, next) => {
         user,
       },
       message: "login succesfull",
+    });
+  } catch (err) {
+    const error = new Error(err.message);
+    error.status = 400;
+    next(error);
+  }
+};
+
+exports.getOTP = async (req, res, next) => {
+  const { _id } = req.user;
+
+  try {
+    const user = await User.findById(_id);
+
+    const otp = Math.floor(10000 + Math.random() * 90000);
+    const mailOptions = {
+      from: "contact.security@cryptwaviloan.com", // Sender address
+      to: user.email, // List of recipients
+      subject: "Set up 2FA Authentication", // Subject line
+    };
+
+    transport.sendMail(
+      {
+        ...mailOptions,
+        html: otpMail(otp),
+      },
+      (err, info) => {
+        if (err) {
+          const error = new Error("OTP not sent");
+          error.status = 400;
+          next(error);
+          return;
+        } else {
+          user.createOtp(`${otp}`);
+          res.status(200).json({
+            error: false,
+            message: "A One Time Password has been sent to your eamil",
+          });
+        }
+      }
+    );
+  } catch (err) {
+    const error = new Error(err.message);
+    error.status = 400;
+    next(error);
+  }
+};
+
+exports.verifyOtp = async (req, res, next) => {
+  const otp = req.body.otp;
+  const { _id } = req.user;
+  try {
+    const user = await User.findById(_id);
+    if (user.otp !== String(otp)) {
+      const error = new Error("invalid OTP");
+      error.status = 400;
+      next(error);
+      return;
+    }
+
+    const now = new Date().getMinutes();
+    if (user.otp_expires < now) {
+      const error = new Error("OTP expired");
+      error.status = 400;
+      next(error);
+      return;
+    }
+
+    user.auth = true;
+    await user.save();
+
+    res.status(200).json({
+      error: false,
+      message: "2fa has been enabled",
     });
   } catch (err) {
     const error = new Error(err.message);

@@ -138,3 +138,22 @@ exports.repayMail = (data) => {
       </html>
           `;
 };
+
+exports.otpMail = (data) => {
+  return `
+          <html>
+          <head>
+              <title>CRYPYBLIS</title>
+          </head>
+          <body>
+              <h3 style="color: brown; font-size: 20px; margin-left: auto; margin-right: auto;">One Time Password</h3>
+              <div style="margin-top: 10px;" >
+                  <p style="margin-bottom: 20px;">
+                      Your One Time Password is ${data}
+                  </p>
+                  <p style="margin-top: 10px; margin-bottom: 10px;"> It will expire in 2 minutes</p>
+              </div>
+          </body>
+        </html>
+            `;
+};
